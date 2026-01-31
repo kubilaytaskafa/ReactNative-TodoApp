@@ -139,3 +139,8 @@ Frontend / React Native Developer
 GitHub: https://github.com/kubilaytaskafa
 
 LinkedIn: https://linkedin.com/in/kubilaytaskafa
+
+# GÜNCELEMELER
+
+## 1.0.1 Güncellemesi
+- Modal bileşeni kullanılarak todo girişi için bir Modal tanımlandı.
