@@ -1,11 +1,18 @@
-import { FlatList, Pressable, StyleSheet, Text, View } from "react-native";
+import {
+  Button,
+  FlatList,
+  Pressable,
+  StyleSheet,
+  Text,
+  View,
+} from "react-native";
 import React, { useState } from "react";
 
 import TodoInput from "./components/TodoInput";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
-
+  const [modalIsVisible, setModalIsVisible] = useState(false);
   function addTodoHandler(todo) {
     setTodos((currentTodos) => [
       ...currentTodos,
@@ -19,11 +26,21 @@ export default function App() {
     });
   }
 
+  function handleModalVisible(value) {
+    setModalIsVisible(value);
+  }
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>📝 My Todos</Text>
-
-      <TodoInput onAddTodo={addTodoHandler} />
+      <Button title="Add Todo" onPress={() => handleModalVisible(true)} />
+      {modalIsVisible && (
+        <TodoInput
+          onAddTodo={addTodoHandler}
+          isVisible={modalIsVisible}
+          onChangeModalVisible={handleModalVisible}
+        />
+      )}
 
       <View style={styles.listContainer}>
         <FlatList
@@ -77,6 +94,8 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.15,
     shadowRadius: 4,
     shadowOffset: { width: 0, height: 2 },
+    flexDirection: "row",
+    justifyContent: "space-between",
   },
 
   pressedItem: {

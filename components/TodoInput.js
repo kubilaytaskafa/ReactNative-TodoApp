@@ -1,42 +1,80 @@
-import { StyleSheet, Text, View, TextInput, Button } from "react-native";
-import React from "react";
+import { StyleSheet, Text, View, TextInput, Button, Modal } from "react-native";
+import React, { useState } from "react";
 
-import { useState } from "react";
-
-export default function TodoInput({ onAddTodo }) {
+export default function TodoInput({
+  onAddTodo,
+  isVisible,
+  onChangeModalVisible,
+}) {
   const [enteredTodos, setEnteredTodos] = useState("");
 
-  function todoInputHandler(enteredText) {
-    onAddTodo(enteredText);
+  function todoInputHandler() {
+    onAddTodo(enteredTodos);
     setEnteredTodos("");
+    onChangeModalVisible(false); // Modal'ı kapat
   }
 
   return (
-    <View style={styles.container}>
-      <TextInput
-        style={styles.todoInput}
-        placeholder="Add a new todo"
-        value={enteredTodos}
-        onChangeText={setEnteredTodos}
-      />
-      <Button title="Add Todo" onPress={() => todoInputHandler(enteredTodos)} />
-    </View>
+    <Modal visible={isVisible} animationType="slide">
+      <View style={styles.container}>
+        <TextInput
+          style={styles.todoInput}
+          placeholder="Add a new todo"
+          placeholderTextColor="#a090b0" // Placeholder rengini de düzelttim görünmesi için
+          value={enteredTodos}
+          onChangeText={setEnteredTodos}
+        />
+
+        {/* DÜZELTME: Butonları kapsayan View'i (buttonContainer) buraya ekledik */}
+        <View style={styles.buttonContainer}>
+          {/* İptal Butonu */}
+          <View style={styles.button}>
+            <Button
+              title="Cancel"
+              onPress={() => onChangeModalVisible(false)}
+              color="#f31282" // Opsiyonel: İptal butonu rengi (iOS/Android fark edebilir)
+            />
+          </View>
+
+          {/* Ekle Butonu */}
+          <View style={styles.button}>
+            <Button
+              title="Add Todo"
+              onPress={todoInputHandler}
+              color="#b180f0" // Opsiyonel: Ekle butonu rengi
+            />
+          </View>
+        </View>
+        {/* buttonContainer kapanışı */}
+      </View>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: "row",
+    flex: 1,
+    justifyContent: "center",
     alignItems: "center",
-    justifyContent: "space-between",
-    padding: 10,
-    width: "100%",
+    padding: 16,
+    backgroundColor: "#311b6b",
   },
   todoInput: {
-    borderBottomColor: "black",
-    borderBottomWidth: 1,
-    width: "70%",
+    width: "100%",
+    backgroundColor: "#e4d0ff",
+    color: "#120438",
     borderRadius: 6,
-    padding: 6,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: "#e4d0ff",
+    fontSize: 16,
+  },
+  buttonContainer: {
+    flexDirection: "row", // Butonları yan yana dizer
+    marginTop: 16,
+  },
+  button: {
+    width: 100,
+    marginHorizontal: 8,
   },
 });
