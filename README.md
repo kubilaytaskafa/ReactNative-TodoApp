@@ -8,7 +8,7 @@ Kullanıcılar todo ekleyebilir ve dokunarak silebilir.
 
 ## 📸 Uygulama Görselleri
 
-> Buraya ekran görüntülerini ekleyebilirsin:
+
 
 ### Ana Ekran
 <img width="477" height="1008" alt="image" src="https://github.com/user-attachments/assets/baafe1e9-5944-44ae-a1cd-0f3a1cb7a627" />
