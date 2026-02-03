@@ -9,6 +9,7 @@ import {
 import React, { useState } from "react";
 
 import TodoInput from "./components/TodoInput";
+import { StatusBar } from "expo-status-bar";
 
 export default function App() {
   const [todos, setTodos] = useState([]);
@@ -31,36 +32,39 @@ export default function App() {
   }
 
   return (
-    <View style={styles.container}>
-      <Text style={styles.header}>📝 My Todos</Text>
-      <Button title="Add Todo" onPress={() => handleModalVisible(true)} />
-      {modalIsVisible && (
-        <TodoInput
-          onAddTodo={addTodoHandler}
-          isVisible={modalIsVisible}
-          onChangeModalVisible={handleModalVisible}
-        />
-      )}
+    <>
+      <StatusBar style="dark" />
+      <View style={styles.container}>
+        <Text style={styles.header}>📝 My Todos</Text>
+        <Button title="Add Todo" onPress={() => handleModalVisible(true)} />
+        {modalIsVisible && (
+          <TodoInput
+            onAddTodo={addTodoHandler}
+            isVisible={modalIsVisible}
+            onChangeModalVisible={handleModalVisible}
+          />
+        )}
 
-      <View style={styles.listContainer}>
-        <FlatList
-          data={todos}
-          renderItem={({ item }) => (
-            <Pressable
-              android_ripple={{ color: "red" }}
-              onPress={() => deleteTodoHandler(item.id)}
-              style={({ pressed }) => [
-                styles.todoItem,
-                pressed && styles.pressedItem,
-              ]}
-            >
-              <Text style={styles.todoText}>{item.title}</Text>
-            </Pressable>
-          )}
-          keyExtractor={(item) => item.id}
-        />
+        <View style={styles.listContainer}>
+          <FlatList
+            data={todos}
+            renderItem={({ item }) => (
+              <Pressable
+                android_ripple={{ color: "red" }}
+                onPress={() => deleteTodoHandler(item.id)}
+                style={({ pressed }) => [
+                  styles.todoItem,
+                  pressed && styles.pressedItem,
+                ]}
+              >
+                <Text style={styles.todoText}>{item.title}</Text>
+              </Pressable>
+            )}
+            keyExtractor={(item) => item.id}
+          />
+        </View>
       </View>
-    </View>
+    </>
   );
 }
 
